@@ -1578,6 +1578,21 @@
 }
 
 
+/* Every icon bubble's colour, restated after the label rules.
+   The bubbles are spans, and a parent's `.x span{color:…}` label rule
+   (0,1,1) outranks the bubble's own class (0,1,0) — which is why these
+   glyphs were rendering ink-black on a navy ground. Stated once, last, so
+   it cannot be quietly clobbered again. The class is doubled to raise
+   specificity to (0,2,0) — being later in the file is not enough to beat a
+   (0,1,1) descendant selector. */
+.spec__bubble.spec__bubble,.trust__bubble.trust__bubble,
+.benefit__bubble.benefit__bubble,.what__bubble.what__bubble,
+.issue__bubble.issue__bubble,.icon-row__bubble.icon-row__bubble,
+.statcard__bubble.statcard__bubble,.empty__bubble.empty__bubble,
+.addr__pin.addr__pin,.auth__bubble.auth__bubble{
+  color:#fff;
+}
+
 /* ── press & hover ───────────────────────────────────────
    A touch UI that never moves reads as a picture of an app. Every tappable
    surface gives under a finger, and on a pointer it lifts as well — the two

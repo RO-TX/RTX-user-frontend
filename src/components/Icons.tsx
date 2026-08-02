@@ -207,7 +207,7 @@ const SpecShield = (p: P) => (
   </S>
 );
 const SpecTds = (p: P) => (
-  <S {...p}><path d="M8.6 4.2v9.4a3 3 0 0 0 3 3h5.4" /><path d="m14.2 13.4 3.2 3.2-3.2 3.2" /></S>
+  <S {...p}><path d="M7.5 4.4v9.2a3 3 0 0 0 3 3h5.4" /><path d="m13.1 13.6 3.2 3.2-3.2 3.2" /></S>
 );
 const SpecDroplet = (p: P) => (
   <S {...p}><path d="M12 3.2S6.1 9.3 6.1 13.6a5.9 5.9 0 0 0 11.8 0C17.9 9.3 12 3.2 12 3.2Z" /></S>
@@ -241,19 +241,24 @@ const SpecInstall = (p: P) => (
   </S>
 );
 
+/* Two whole people rather than one person and two loose arcs. The old glyph
+   drew the second figure as a bare crescent and a floating shoulder, which
+   at 17px knocked out of navy read as debris rather than a person. */
 const SpecFamilies = (p: P) => (
   <S {...p}>
-    <circle cx="9.4" cy="8.2" r="3.1" />
-    <path d="M3.6 19.6a5.8 5.8 0 0 1 11.6 0" />
-    <path d="M16.2 6.1a3 3 0 0 1 0 5.9" />
-    <path d="M17.4 14.2a5.2 5.2 0 0 1 3.4 4.9" />
+    <circle cx="7.9" cy="8.6" r="2.9" />
+    <path d="M2.9 19.2a5 5 0 0 1 10 0" />
+    <circle cx="16.5" cy="8.6" r="2.9" />
+    <path d="M11.5 19.2a5 5 0 0 1 10 0" />
   </S>
 );
+/* Squared off and re-centred; the wheels used to sit adrift below a box that
+   was itself pushed off the middle of the 24 grid. */
 const SpecDelivery = (p: P) => (
   <S {...p}>
-    <path d="M2.8 6.2h9.6v9.2H2.8z" />
-    <path d="M12.4 9.4h3.6l3.2 3.2v2.8h-6.8z" />
-    <circle cx="7" cy="17.6" r="1.7" /><circle cx="16.4" cy="17.6" r="1.7" />
+    <rect x="2.8" y="6" width="9.4" height="8.4" rx="1.3" />
+    <path d="M12.2 8.8h3.7l3.3 3.3v2.3h-7z" />
+    <circle cx="7.2" cy="17.4" r="1.8" /><circle cx="16.2" cy="17.4" r="1.8" />
   </S>
 );
 const SpecPayment = (p: P) => (
