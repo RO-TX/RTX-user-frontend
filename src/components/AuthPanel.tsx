@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import { Check, ShieldCheck } from './Icons';
+import PasswordField, { isStrongPassword, passwordProblems } from './PasswordField';
 import { useAuth } from '@/lib/auth-context';
 import { api, apiMessage } from '@/lib/api';
 
@@ -32,12 +33,15 @@ export default function AuthPanel({
   const [pending, setPending] = useState<Omit<Parameters<typeof signUp>[0], 'code'> | null>(null);
   /** Reset step 2 — the token arrives by email. */
   const [resetFor, setResetFor] = useState<string | null>(null);
+  /** Controlled so the rule checklist can score it on every keystroke. */
+  const [pw, setPw] = useState('');
 
   function switchMode(next: Mode) {
     setMode(next);
     setMsg(null);
     setPending(null);
     setResetFor(null);
+    setPw('');
   }
 
   async function run(fn: () => Promise<void>, offline: string) {
@@ -56,7 +60,9 @@ export default function AuthPanel({
     e.preventDefault();
     const d = new FormData(e.currentTarget);
     return run(async () => {
-      await signIn(String(d.get('email') ?? ''), String(d.get('password') ?? ''));
+      // Signing in never checks the password against the rules — an account
+      // made before they existed still has to be able to get in.
+      await signIn(String(d.get('email') ?? ''), pw);
       onDone?.();
     }, 'Could not reach the store — try again in a moment.');
   };
@@ -66,10 +72,10 @@ export default function AuthPanel({
     const d = new FormData(e.currentTarget);
     const email = String(d.get('email') ?? '');
     const mobile = String(d.get('mobile') ?? '');
-    const password = String(d.get('password') ?? '');
+    const password = pw;
 
-    if (password.length < 8) {
-      setMsg({ text: 'Password must be at least 8 characters.', ok: false });
+    if (!isStrongPassword(password)) {
+      setMsg({ text: `Password still needs: ${passwordProblems(password).join(', ')}.`, ok: false });
       return;
     }
     if (mobile && !/^\d{10}$/.test(mobile)) {
@@ -114,20 +120,20 @@ export default function AuthPanel({
     e.preventDefault();
     if (!resetFor) return;
     const d = new FormData(e.currentTarget);
-    const password = String(d.get('password') ?? '');
-    if (password.length < 8) {
-      setMsg({ text: 'Password must be at least 8 characters.', ok: false });
+    if (!isStrongPassword(pw)) {
+      setMsg({ text: `Password still needs: ${passwordProblems(pw).join(', ')}.`, ok: false });
       return;
     }
     return run(async () => {
       await api.auth.resetPassword({
         email: resetFor,
         token: String(d.get('token') ?? ''),
-        password,
+        password: pw,
       });
       setMsg({ text: 'Password changed — sign in with the new one.', ok: true });
       setMode('signin');
       setResetFor(null);
+      setPw('');
     }, 'Could not reset the password.');
   };
 
@@ -164,16 +170,13 @@ export default function AuthPanel({
             <label htmlFor="au-em">Email</label>
             <input id="au-em" name="email" type="email" required autoComplete="email" />
           </div>
-          <div className="field">
-            <label htmlFor="au-pw">Password</label>
-            <input
-              id="au-pw"
-              name="password"
-              type="password"
-              required
-              autoComplete="current-password"
-            />
-          </div>
+          <PasswordField
+            name="password"
+            label="Password"
+            value={pw}
+            onChange={setPw}
+            autoComplete="current-password"
+          />
           <button className="btn btn--block" type="submit" disabled={busy}>
             {busy ? 'Signing in…' : 'Sign in'}
           </button>
@@ -210,18 +213,15 @@ export default function AuthPanel({
               placeholder="10 digits"
             />
           </div>
-          <div className="field">
-            <label htmlFor="au-pw2">Password</label>
-            <input
-              id="au-pw2"
-              name="password"
-              type="password"
-              required
-              minLength={8}
-              autoComplete="new-password"
-            />
-            <span className="field__hint">At least 8 characters.</span>
-          </div>
+          <PasswordField
+            name="password"
+            label="Password"
+            value={pw}
+            onChange={setPw}
+            autoComplete="new-password"
+            showRules
+            hint="At least 8 characters, with upper and lower case and a number."
+          />
           <button className="btn btn--block" type="submit" disabled={busy}>
             {busy ? 'Sending code…' : 'Send verification code'}
           </button>
@@ -277,17 +277,14 @@ export default function AuthPanel({
             <input id="au-tok" name="token" required />
             <span className="field__hint">From the email we sent to {resetFor}.</span>
           </div>
-          <div className="field">
-            <label htmlFor="au-npw">New password</label>
-            <input
-              id="au-npw"
-              name="password"
-              type="password"
-              required
-              minLength={8}
-              autoComplete="new-password"
-            />
-          </div>
+          <PasswordField
+            name="password"
+            label="New password"
+            value={pw}
+            onChange={setPw}
+            autoComplete="new-password"
+            showRules
+          />
           <button className="btn btn--block" type="submit" disabled={busy}>
             {busy ? 'Saving…' : 'Set new password'}
           </button>

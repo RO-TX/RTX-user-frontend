@@ -74,6 +74,19 @@ export const Trash = (p: P) => (
   </S>
 );
 export const Check = (p: P) => (<S {...p}><path d="m5 12.5 4.5 4.5L19 7" /></S>);
+export const Eye = (p: P) => (
+  <S {...p}>
+    <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </S>
+);
+export const EyeOff = (p: P) => (
+  <S {...p}>
+    <path d="M10.6 6.7A9.9 9.9 0 0 1 12 6.6c6.4 0 10 5.4 10 5.4a18 18 0 0 1-3.2 3.7M6.5 8.3A17.6 17.6 0 0 0 2 12s3.6 5.4 10 5.4a10 10 0 0 0 3.4-.55" />
+    <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+    <path d="M3 3l18 18" />
+  </S>
+);
 
 /** Solid star — filled via CSS `fill:currentColor`. */
 export const Star = (p: P) => (

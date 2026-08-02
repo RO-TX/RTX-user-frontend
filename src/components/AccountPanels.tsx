@@ -4,6 +4,7 @@ import { useState, type FormEvent, type ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Check, ChevronRight, SpecIcon } from './Icons';
+import PasswordField, { isStrongPassword, passwordProblems } from './PasswordField';
 import AddressBook from './AddressBook';
 import { money } from '@/lib/money';
 import { cardImage } from '@/data/catalog';
@@ -80,6 +81,10 @@ export default function AccountPanels({
   const [open, setOpen] = useState<string | null>('orders');
   const [saved, setSaved] = useState<{ text: string; ok: boolean } | null>(null);
   const [pwMsg, setPwMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  /** Controlled so the rule checklist can score it; `form.reset()` misses it. */
+  const [curPw, setCurPw] = useState('');
+  const [newPw, setNewPw] = useState('');
+  const [delPw, setDelPw] = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
   const [prefs, setPrefs] = useState({ orderUpdates: true, filterReminders: true, offers: false });
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -124,9 +129,9 @@ export default function AccountPanels({
     e.preventDefault();
     const form = e.currentTarget;
     const d = new FormData(form);
-    const next = String(d.get('newPassword') ?? '');
-    if (next.length < 8 || next.length > 72) {
-      setPwMsg({ text: 'Password must be 8–72 characters.', ok: false });
+    const next = newPw;
+    if (!isStrongPassword(next)) {
+      setPwMsg({ text: `Password still needs: ${passwordProblems(next).join(', ')}.`, ok: false });
       return;
     }
     if (next !== String(d.get('confirm') ?? '')) {
@@ -135,8 +140,10 @@ export default function AccountPanels({
     }
     setPwMsg({ text: 'Changing…', ok: true });
     try {
-      await api.auth.changePassword(String(d.get('currentPassword') ?? ''), next);
+      await api.auth.changePassword(curPw, next);
       form.reset();
+      setCurPw('');
+      setNewPw('');
       // The server revoked every refresh token, so this session is over too —
       // drop straight back to the sign-in panel rather than pretending.
       setPwMsg({ text: 'Password changed. Sign in again with the new one.', ok: true });
@@ -412,19 +419,24 @@ export default function AccountPanels({
         onToggle={() => toggle('security')}
       >
         <form className="panel" onSubmit={savePassword}>
+          <PasswordField
+            name="currentPassword"
+            label="Current password"
+            value={curPw}
+            onChange={setCurPw}
+            autoComplete="current-password"
+          />
+          <PasswordField
+            name="newPassword"
+            label="New password"
+            value={newPw}
+            onChange={setNewPw}
+            autoComplete="new-password"
+            showRules
+          />
           <div className="field">
-            <label htmlFor="ac-cur">Current password</label>
-            <input id="ac-cur" name="currentPassword" type="password" autoComplete="current-password" />
-          </div>
-          <div className="field-2">
-            <div className="field">
-              <label htmlFor="ac-new">New password</label>
-              <input id="ac-new" name="newPassword" type="password" autoComplete="new-password" />
-            </div>
-            <div className="field">
-              <label htmlFor="ac-cf">Repeat it</label>
-              <input id="ac-cf" name="confirm" type="password" autoComplete="new-password" />
-            </div>
+            <label htmlFor="ac-cf">Repeat it</label>
+            <input id="ac-cf" name="confirm" type="password" autoComplete="new-password" />
           </div>
           <button className="btn btn--sm btn--block" type="submit">
             Change password
@@ -464,16 +476,13 @@ export default function AccountPanels({
                 void deleteAccount(String(pw ?? ''));
               }}
             >
-              <div className="field">
-                <label htmlFor="ac-del">Type your password to confirm</label>
-                <input
-                  id="ac-del"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                />
-              </div>
+              <PasswordField
+                name="password"
+                label="Type your password to confirm"
+                value={delPw}
+                onChange={setDelPw}
+                autoComplete="current-password"
+              />
               <div className="danger__acts">
                 <button
                   className="btn btn--ghost btn--sm"
@@ -481,6 +490,7 @@ export default function AccountPanels({
                   onClick={() => {
                     setConfirmDelete(false);
                     setDelMsg('');
+                    setDelPw('');
                   }}
                 >
                   Keep my account

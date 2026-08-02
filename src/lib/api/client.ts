@@ -11,8 +11,18 @@ import type { Envelope, ErrorEnvelope, Pagination } from './types';
  *  - a 401 triggers exactly one `/auth/refresh` + retry, then gives up
  */
 
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? 'http://localhost:5000/api';
+/**
+ * The backend mounts every route under `/api` unconditionally
+ * (`app.use('/api', apiLimiter, apiRoutes)`), so a base URL without that
+ * segment can only ever 404 — "Route not found: POST /auth/request-otp" and
+ * friends. Setting `NEXT_PUBLIC_API_URL` to a bare host is the easy mistake
+ * to make on a deploy, so the suffix is enforced here rather than trusted.
+ */
+export const API_BASE = (() => {
+  const raw = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '');
+  if (!raw) return 'http://localhost:5000/api';
+  return /\/api$/.test(raw) ? raw : `${raw}/api`;
+})();
 
 /** In-memory only, per §2 — a page reload re-acquires it via /auth/refresh. */
 let accessToken: string | null = null;
