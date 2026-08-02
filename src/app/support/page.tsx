@@ -39,7 +39,7 @@ export default function SupportPage() {
     <AppShell tabBar>
       <div className="page-head">
         <h1>Support</h1>
-        <p>Answers to the questions we get most, and three ways to reach a human.</p>
+        <p>Common questions, and three ways to reach us.</p>
       </div>
 
       <div className="rows">

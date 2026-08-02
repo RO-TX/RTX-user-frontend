@@ -176,9 +176,7 @@ export default function AccountPanels({
       >
         {orders.length === 0 && (
           <div className="panel">
-            <p className="sect__note" style={{ margin: 0 }}>
-              No orders yet. Anything you buy shows up here with its status and delivery address.
-            </p>
+            <p className="sect__note" style={{ margin: 0 }}>No orders yet.</p>
             <Link className="btn btn--sm" href="/shop" style={{ marginTop: 12 }}>
               Browse products
             </Link>
@@ -262,10 +260,7 @@ export default function AccountPanels({
                       </div>
                     </dl>
 
-                    <p className="sect__note">
-                      Live tracking is not wired up yet — the courier number above is the record we
-                      hold.
-                    </p>
+                    <p className="sect__note">Live tracking not available yet.</p>
 
                     {o.id && (
                       <Link className="btn btn--ghost btn--sm" href={`/order/${o.id}`}>
@@ -288,10 +283,7 @@ export default function AccountPanels({
         onToggle={() => toggle('addresses')}
       >
         <AddressBook onCount={setAddressCount} />
-        <p className="sect__note">
-          Saved to your account, so they follow you to any device. The default one is filled in for
-          you at checkout.
-        </p>
+        <p className="sect__note">Your default address is used at checkout.</p>
       </Section>
 
       <Section
@@ -407,7 +399,7 @@ export default function AccountPanels({
               <span className="toggle__track" aria-hidden="true" />
             </label>
           ))}
-          <p className="sect__note">Saved on this device — there is no preferences endpoint yet.</p>
+          <p className="sect__note">Saved on this device.</p>
         </div>
       </Section>
 

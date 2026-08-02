@@ -17,7 +17,7 @@ type Mode = 'signin' | 'signup' | 'forgot';
  */
 export default function AuthPanel({
   heading = 'Sign in',
-  intro = 'Your orders, addresses and service history live in your account.',
+  intro = 'Orders, addresses and service history.',
   onDone,
 }: {
   heading?: string;
@@ -220,7 +220,7 @@ export default function AuthPanel({
             onChange={setPw}
             autoComplete="new-password"
             showRules
-            hint="At least 8 characters, with upper and lower case and a number."
+            hint="8+ characters, mixed case, one number."
           />
           <button className="btn btn--block" type="submit" disabled={busy}>
             {busy ? 'Sending code…' : 'Send verification code'}

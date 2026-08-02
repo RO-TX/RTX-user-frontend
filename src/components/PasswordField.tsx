@@ -25,9 +25,9 @@ export interface PasswordRule {
  * see the note in AuthPanel.
  */
 export const PASSWORD_RULES: PasswordRule[] = [
-  { id: 'len', label: '8 characters or more', test: (v) => v.length >= 8 && v.length <= 72 },
-  { id: 'upper', label: 'An uppercase letter', test: (v) => /[A-Z]/.test(v) },
-  { id: 'lower', label: 'A lowercase letter', test: (v) => /[a-z]/.test(v) },
+  { id: 'len', label: '8+ characters', test: (v) => v.length >= 8 && v.length <= 72 },
+  { id: 'upper', label: 'Uppercase', test: (v) => /[A-Z]/.test(v) },
+  { id: 'lower', label: 'Lowercase', test: (v) => /[a-z]/.test(v) },
   { id: 'digit', label: 'A number', test: (v) => /\d/.test(v) },
 ];
 

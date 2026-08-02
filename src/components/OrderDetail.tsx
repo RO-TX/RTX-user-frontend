@@ -173,9 +173,7 @@ export default function OrderDetail({ id }: { id: string }) {
 
             {order.notes && <p className="sect__note">{order.notes}</p>}
 
-            <p className="sect__note">
-              Live tracking is not wired up yet — the courier number above is the record we hold.
-            </p>
+            <p className="sect__note">Live tracking not available yet.</p>
           </div>
         </article>
       </div>

@@ -24,7 +24,7 @@ export const stats: Stat[] = [
 
 export const story = {
   heading: 'Our Story',
-  body: 'From a small beginning to becoming a trusted name in 80,000+ homes. Our promise is built on trust, innovation and quality.',
+  body: 'A trusted name in 80,000+ homes.',
   cta: 'Know Our Story',
   poster: '/img/cat1.jpg',
 };
@@ -37,7 +37,7 @@ export interface Video {
 
 export const featureVideo = {
   heading: 'RTX in Action',
-  body: 'See how our purifiers bring purity to millions of homes.',
+  body: 'Purity, in practice.',
   poster: '/img/pdp_main.jpg',
 };
 
@@ -57,25 +57,25 @@ export interface Review {
 export const reviews: Review[] = [
   {
     rating: 5,
-    body: 'Been using RTX for 2 years now. Highly reliable and low maintenance. Water taste is so pure!',
+    body: 'Two years in. Reliable, low maintenance, and the water tastes pure.',
     name: 'Rohit Verma',
     role: 'Verified Buyer',
   },
   {
     rating: 5,
-    body: 'Excellent product quality and water taste is amazing. Very easy to install.',
+    body: 'Great build, great taste, easy to install.',
     name: 'Ajay Mehta',
     role: 'Verified Buyer',
   },
   {
     rating: 5,
-    body: 'The TDS controller makes a real difference. Service visit was on time and the engineer explained everything.',
+    body: 'The TDS controller makes a real difference. Service was on time.',
     name: 'Sneha Iyer',
     role: 'Verified Buyer',
   },
   {
     rating: 4,
-    body: 'Solid build and the filter reminders are genuinely useful. Took a week to arrive but worth the wait.',
+    body: 'Solid build, and the filter reminders are genuinely useful.',
     name: 'Imran Qureshi',
     role: 'Verified Buyer',
   },
@@ -104,15 +104,15 @@ export const trustLanding: TrustItem[] = [
 export const trustShop: TrustItem[] = [
   { icon: 'delivery', title: 'Free Shipping', note: 'On Orders Above ₹5,000' },
   { icon: 'warranty', title: '1 Year Warranty', note: 'On All Products' },
-  { icon: 'families', title: 'Expert Support', note: 'We’re Here to Help' },
+  { icon: 'families', title: 'Expert Support', note: 'Seven days a week' },
 ];
 
 /** Stacked rows on the product page. */
 export const benefits: TrustItem[] = [
   { icon: 'delivery', title: 'Free Delivery', note: 'On orders above ₹5,000' },
   { icon: 'warranty', title: '1 Year Warranty', note: 'On all products' },
-  { icon: 'returns', title: 'Easy Returns', note: 'Hassle free returns within 7 days' },
-  { icon: 'payment', title: 'Secure Payments', note: '100% safe & secure payments' },
+  { icon: 'returns', title: 'Easy Returns', note: 'Within 7 days' },
+  { icon: 'payment', title: 'Secure Payments', note: 'Encrypted checkout' },
 ];
 
 /**
@@ -132,7 +132,7 @@ export interface ServiceReview {
 export const serviceReviews: ServiceReview[] = [
   {
     rating: 5,
-    body: 'Booked at 9pm, got a call by 11 the next morning and the engineer was here by 4. Membrane replaced, showed me the TDS before and after.',
+    body: 'Booked at 9pm, engineer here by 4 the next day. Showed me the TDS before and after.',
     name: 'Rohit Verma',
     city: 'Noida',
     job: 'Membrane replaced',
@@ -140,7 +140,7 @@ export const serviceReviews: ServiceReview[] = [
   },
   {
     rating: 5,
-    body: 'Water had slowed to a trickle. Turned out to be the sediment filter. Fixed in one visit and he cleaned the whole unit while he was here.',
+    body: 'Slowed to a trickle — sediment filter. Fixed in one visit.',
     name: 'Sneha Iyer',
     city: 'Gurugram',
     job: 'Filter change',
@@ -148,7 +148,7 @@ export const serviceReviews: ServiceReview[] = [
   },
   {
     rating: 5,
-    body: 'The visit fee came off the bill exactly as quoted. No surprise charges, and he asked before fitting the part.',
+    body: 'Visit fee came off the bill as quoted. No surprises.',
     name: 'Ajay Mehta',
     city: 'Delhi',
     job: 'Pump repair',
@@ -156,7 +156,7 @@ export const serviceReviews: ServiceReview[] = [
   },
   {
     rating: 4,
-    body: 'Same engineer as last year, which meant no re-explaining anything. Slot slipped by an hour but they called ahead.',
+    body: 'Same engineer as last year. Slot slipped an hour, but they called ahead.',
     name: 'Priya Nair',
     city: 'Ghaziabad',
     job: 'Annual service',
