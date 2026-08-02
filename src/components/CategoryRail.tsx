@@ -20,9 +20,10 @@ export default function CategoryRail({
     <nav className="cats" aria-label="Categories">
       {showAll && (
         <Link href="/shop" className="cat" data-active={!active ? '' : undefined}>
-          <span className="cat__tile cat__tile--all" aria-hidden="true">
-            All
-          </span>
+          {/* No word inside the crop — the chip's own label already says
+              "Everything", and a second one read as a stutter. A dot stands
+              in so this chip keeps the shape of the rest of the rail. */}
+          <span className="cat__tile cat__tile--all" aria-hidden="true" />
           <span>Everything</span>
         </Link>
       )}
