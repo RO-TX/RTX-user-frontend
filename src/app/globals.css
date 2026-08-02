@@ -7,12 +7,12 @@
    ══════════════════════════════════════════════════════════ */
 
 :root{
-  --bone:#E4E4E8;        /* canvas outside the phone */
+  --bone:#DFE1E6;        /* canvas outside the phone */
   /* The ground is the lightest thing on screen and every panel sits a shade
      into it. Cards are defined by that step in tone, not by shadow — so the
      shadows below are a hint of depth rather than the thing doing the work. */
   --surface:#FFFFFF;     /* page ground */
-  --card:#F2F2F5;        /* every card/panel sits a shade under the ground */
+  --card:#F5F6F8;        /* every card/panel sits a shade under the ground */
   --tile:#FFFFFF;        /* product image tile — a white well in a grey card */
   --thumb:#FFFFFF;       /* category thumb */
   --input:#FFFFFF;       /* form fields stay white wherever they land */
@@ -30,8 +30,8 @@
   --muted:#5C6673;
   --faint:#8B939E;
 
-  --line:#E5E5E9;
-  --line-soft:#EEEEF1;
+  --line:#DFE1E7;
+  --line-soft:#EAEBEF;
 
   /* Cards are separated from the ground by tone, so these only have to
      suggest a lift — the heavy drop shadows the white-on-grey scheme needed
@@ -142,7 +142,7 @@
 .sitefoot{display:none}
 
 /* ── shared bits ───────────────────────────────────────── */
-.icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+.icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
 .icon--sm{width:18px;height:18px}
 
 .tap{
@@ -182,8 +182,9 @@
 .story__copy h2,
 .videos__intro h2{
   display:inline-block;margin:0;padding:7px 14px;
-  background:var(--accent-soft);border-radius:var(--r-sm);
-  font-size:18px;font-weight:600;letter-spacing:-.015em;color:var(--accent-deep);
+  background:linear-gradient(135deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-sm);box-shadow:var(--shadow-primary);
+  font-size:18px;font-weight:600;letter-spacing:-.015em;color:#fff;
 }
 .story__copy h2,.videos__intro h2{align-self:flex-start}
 .link-more{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:500;color:var(--accent-deep)}
@@ -237,7 +238,7 @@
   display:grid;grid-template-columns:repeat(4,1fr);
 }
 .feature{display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;padding:0 2px}
-.feature svg{width:25px;height:25px;stroke:var(--navy);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.feature svg{width:25px;height:25px;stroke:var(--navy);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .feature span{font-size:11.5px;line-height:1.32;font-weight:500;color:var(--ink);letter-spacing:-.005em}
 .landing-foot{height:26px}
 
@@ -366,11 +367,18 @@
 /* A full-bleed hairline closes the category rail off — browsing categories
    and reading the results are two different jobs. */
 .result-head{
-  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
   margin-top:16px;padding:18px var(--pad) 10px;
   border-top:1px solid var(--line);
 }
-.result-head h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+/* Same plate as every other section head — this one carries the chosen
+   category's full name, which is where a tapped, clamped rail label goes. */
+.result-head h2{
+  display:inline-block;margin:0;padding:7px 14px;
+  background:linear-gradient(135deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-sm);box-shadow:var(--shadow-primary);
+  font-size:17px;font-weight:600;letter-spacing:-.015em;color:#fff;
+}
 .result-head span{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px var(--pad) 0}
@@ -484,7 +492,7 @@
   transition:background .18s ease,color .18s ease;
 }
 .tab span{font-size:10px;font-weight:500;letter-spacing:-.005em;line-height:1.1}
-.tab svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tab svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tab:hover{color:var(--ink)}
 .tab[aria-current="page"]{background:var(--navy);color:#fff}
 .tab[aria-current="page"] span{font-weight:600}
@@ -538,11 +546,15 @@
   box-shadow:var(--shadow-card);
 }
 .spec{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
+/* Icon bubbles are filled navy with the glyph knocked out in white.
+   A pale tint behind a 1.6px stroke reads as washed out at 16px; solid
+   ground and a heavier stroke give the icon somewhere to sit. */
 .spec__bubble{
   width:30px;height:30px;display:grid;place-items:center;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.spec__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.spec__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .spec span{font-size:11.5px;line-height:1.32;color:var(--ink);font-weight:500}
 
 .accordion{padding:20px var(--pad) 0}
@@ -616,9 +628,10 @@
 .icon-row:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px)}
 .icon-row__bubble{
   flex:none;width:38px;height:38px;display:grid;place-items:center;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.icon-row__bubble svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.icon-row__bubble svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .icon-row__body{flex:1 1 auto;min-width:0}
 .icon-row__body h3{margin:0;font-size:14.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
 .icon-row__body p{margin:3px 0 0;font-size:12.5px;line-height:1.45;color:var(--muted)}
@@ -661,9 +674,10 @@
 }
 .empty__bubble{
   width:62px;height:62px;display:grid;place-items:center;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.empty__bubble svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.empty__bubble svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .empty h2{margin:0;font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-.018em}
 .empty p{margin:0;max-width:26ch;font-size:14px;color:var(--muted);line-height:1.55}
 .empty .btn{margin-top:6px}
@@ -718,9 +732,10 @@
 .statcard__item{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .statcard__bubble{
   width:30px;height:30px;display:grid;place-items:center;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.statcard__bubble svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.statcard__bubble svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .statcard__item b{font-size:16px;font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1.1}
 .statcard__label{font-size:10.5px;line-height:1.3;color:var(--muted)}
 
@@ -789,9 +804,10 @@
 .trust__item{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;padding:0 2px}
 .trust__bubble{
   width:32px;height:32px;display:grid;place-items:center;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.trust__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.trust__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .trust__item b{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.25}
 .trust__item span{font-size:10.5px;line-height:1.3;color:var(--muted)}
 .trust--bare{grid-template-columns:repeat(4,1fr);padding:26px var(--pad) 0}
@@ -815,9 +831,10 @@
 .benefit:last-child{border-bottom:0}
 .benefit__bubble{
   flex:none;width:34px;height:34px;display:grid;place-items:center;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.benefit__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.benefit__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .benefit__body{display:flex;flex-direction:column;gap:2px;min-width:0}
 .benefit__body b{font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.008em}
 .benefit__body span{font-size:11.5px;line-height:1.4;color:var(--muted)}
@@ -1080,9 +1097,9 @@
 .addr{display:flex;gap:12px;padding:13px;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-md)}
 .addr__pin{
   flex:none;display:grid;place-items:center;width:32px;height:32px;
-  background:var(--bubble);color:var(--accent-deep);border-radius:var(--r-pill);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);border-radius:var(--r-pill);
 }
-.addr__pin svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.addr__pin svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .addr__body{display:flex;flex-direction:column;gap:2px;min-width:0}
 .addr__body b{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink)}
 .addr__body>span{font-size:11.5px;line-height:1.4;color:var(--body)}
@@ -1180,7 +1197,7 @@
 }
 .rbtn:hover{transform:translateY(-2px);background:#fff}
 .rbtn:active{transform:translateY(0)}
-.rbtn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.rbtn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .rbtn--wa{background:var(--navy);color:#fff}
 .rbtn--wa:hover{background:var(--navy-deep)}
 
@@ -1339,7 +1356,8 @@
 }
 .what__bubble{
   display:grid;place-items:center;width:38px;height:38px;
-  background:var(--bubble);border-radius:var(--r-pill);color:var(--accent-deep);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
 .what__bubble svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .what__text{display:flex;flex-direction:column;gap:3px;min-width:0}
@@ -1451,9 +1469,9 @@
 .issue[data-active]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .issue__bubble{
   flex:none;width:34px;height:34px;display:grid;place-items:center;
-  border-radius:var(--r-pill);background:var(--bubble);color:var(--accent-deep);
+  border-radius:var(--r-pill);background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
 }
-.issue__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.issue__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .issue span{font-size:12.5px;font-weight:500;line-height:1.3;color:var(--ink)}
 
 /* Status pills stay inside the two accents. */
@@ -1473,9 +1491,9 @@
 }
 .auth__bubble{
   display:grid;place-items:center;width:54px;height:54px;
-  background:var(--bubble);color:var(--accent-deep);border-radius:var(--r-pill);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);border-radius:var(--r-pill);
 }
-.auth__bubble svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.auth__bubble svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .auth h1{margin:14px 0 0;font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
 .auth__intro{margin:7px 0 0;max-width:34ch;font-size:13px;color:var(--muted);line-height:1.55}
 
@@ -1529,7 +1547,7 @@
 }
 .pw__eye svg{
   width:19px;height:19px;stroke:currentColor;fill:none;
-  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
 }
 .pw__eye:hover,.pw__eye[aria-pressed='true']{color:var(--accent-mid)}
 
@@ -1557,6 +1575,27 @@
 .sr-only{
   position:absolute;width:1px;height:1px;margin:-1px;padding:0;
   overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+
+/* ── press & hover ───────────────────────────────────────
+   A touch UI that never moves reads as a picture of an app. Every tappable
+   surface gives under a finger, and on a pointer it lifts as well — the two
+   are separate rules because a phone has no hover to lift with. */
+.pcard,.row,.icon-row,.chip,.cat__tile,.btn{
+  transition:transform .16s ease,box-shadow .2s ease,border-color .16s ease,background-color .16s ease;
+}
+@media (hover:hover){
+  .pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+  .row:hover,.icon-row:hover{border-color:var(--accent-line);background:var(--surface)}
+  .chip:hover{border-color:var(--accent-line)}
+}
+.pcard:active,.row:active,.icon-row:active,.chip:active{transform:scale(.978)}
+.cat:active .cat__tile{transform:scale(.93)}
+.btn:active{transform:translateY(1px);box-shadow:var(--shadow-sm)}
+@media (prefers-reduced-motion:reduce){
+  .pcard:hover,.pcard:active,.row:active,.icon-row:active,
+  .chip:active,.cat:active .cat__tile,.btn:active{transform:none}
 }
 
 
