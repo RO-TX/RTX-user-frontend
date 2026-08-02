@@ -17,13 +17,15 @@
   --thumb:#FFFFFF;       /* category thumb */
   --input:#FFFFFF;       /* form fields stay white wherever they land */
 
-  --navy:#083261;        /* primary — buttons, active nav, logo */
-  --navy-deep:#06284E;
-  --blue:#1365B8;        /* accent — italic "Life.", links */
-  --blue-mid:#2C4F81;    /* category labels */
-  --bubble:#E7EFF9;      /* icon bubble fill — navy tint */
-  --badge-a:#5FA0DA;     /* bestseller pill gradient */
-  --badge-b:#3F82C4;
+  /* Four blues, one ramp: #0D47A1 anchors, #2196F3 is the live one,
+     #90CAF9 draws lines and shapes, #E3F2FD is the surface tint. */
+  --navy:#0D47A1;        /* primary — buttons, active nav, logo */
+  --navy-deep:#0A3A85;
+  --blue:#2196F3;        /* accent — italic "Life.", links */
+  --blue-mid:#1976D2;    /* category labels */
+  --bubble:#E3F2FD;      /* icon bubble fill */
+  --badge-a:#42A5F5;     /* bestseller pill gradient */
+  --badge-b:#1E88E5;
 
   --ink:#0B1220;         /* headings */
   --body:#39414D;
@@ -40,10 +42,10 @@
   --shadow-card:0 1px 2px rgba(16,24,40,.05),0 4px 12px rgba(16,24,40,.04);
   --shadow-lift:0 2px 5px rgba(16,24,40,.07),0 10px 22px rgba(16,24,40,.07);
 
-  --promo-a:#DCE9F1;
-  --promo-b:#B4C6D9;
+  --promo-a:#E3F2FD;
+  --promo-b:#90CAF9;
 
-  --ok:#12406F;
+  --ok:#0D47A1;
   --warn:#9C6300;
   --star:#F0A02E;      /* review stars — amber, not navy */
   --ink-dark:#242A2F;  /* YouTube card ground */
@@ -56,13 +58,13 @@
      to sit ON a navy ground. Everything else is neutral.
      Amber appears only in review stars. Nothing else
      introduces a hue. */
-  --accent:#083261;
-  --accent-deep:#06284E;
-  --accent-mid:#2F6394;   /* accents that sit on navy */
-  --accent-soft:#E7EFF9;
-  --accent-line:#BBCFE8;
+  --accent:#0D47A1;
+  --accent-deep:#0A3A85;
+  --accent-mid:#2196F3;   /* the bright one — gradients, active states */
+  --accent-soft:#E3F2FD;
+  --accent-line:#90CAF9;
 
-  --shadow-primary:0 6px 16px rgba(8,50,97,.24);
+  --shadow-primary:0 6px 16px rgba(13,71,161,.26);
 
   --sans:var(--font-sans),system-ui,-apple-system,'Segoe UI',sans-serif;
   --serif:var(--font-serif),Georgia,'Times New Roman',serif;
@@ -353,7 +355,7 @@
 }
 /* On /shop the rail is the filter, so the chosen category has to read as
    selected from across the screen. */
-.cat[data-active] .cat__tile{background:var(--navy);box-shadow:0 4px 12px rgba(8,50,97,.28)}
+.cat[data-active] .cat__tile{background:var(--navy);box-shadow:0 4px 12px rgba(13,71,161,.3)}
 .cat[data-active] span{color:var(--navy);font-weight:600}
 /* "Everything" has no photograph — it is a filled tile with a word in it. */
 .cat__tile--all{
@@ -399,7 +401,7 @@
   background:var(--navy);
   color:#fff;border-radius:var(--r-pill);
   font-size:10.5px;font-weight:600;letter-spacing:.005em;
-  box-shadow:0 2px 6px rgba(8,50,97,.2);
+  box-shadow:0 2px 6px rgba(13,71,161,.22);
 }
 /* Bestseller on navy, New on the lighter navy — one hue, two weights, so a
    grid of cards never turns into confetti. */
@@ -494,9 +496,21 @@
 .tab span{font-size:10px;font-weight:500;letter-spacing:-.005em;line-height:1.1}
 .tab svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .tab:hover{color:var(--ink)}
-.tab[aria-current="page"]{background:var(--navy);color:#fff}
+/* The page you are on fills its glyph rather than wearing a dark pill. A
+   solid block under one tab was the heaviest thing in the bar and dragged
+   the eye down; colour inside the icon says the same thing quietly. The
+   glyphs are outlines, so "filled" means a pale wash inside the stroke —
+   the shapes stay readable instead of collapsing into blobs. */
+.tab[aria-current="page"]{color:var(--accent)}
 .tab[aria-current="page"] span{font-weight:600}
-.tab[aria-current="page"] svg{stroke:#fff}
+.tab[aria-current="page"] svg{stroke:var(--accent);fill:var(--accent-line)}
+.tab svg{transition:fill .18s ease,stroke .18s ease}
+/* A dot under the active tab, so the state survives being glanced at. */
+.tab[aria-current="page"]::after{
+  content:'';width:4px;height:4px;margin-top:1px;border-radius:var(--r-pill);
+  background:var(--accent-mid);
+}
+.tab::after{content:'';width:4px;height:4px;margin-top:1px}
 
 /* ══ product detail ═══════════════════════════════════════ */
 .navbar{
@@ -552,7 +566,7 @@
 .spec__bubble{
   width:30px;height:30px;display:grid;place-items:center;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .spec__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .spec span{font-size:11.5px;line-height:1.32;color:var(--ink);font-weight:500}
@@ -629,7 +643,7 @@
 .icon-row__bubble{
   flex:none;width:38px;height:38px;display:grid;place-items:center;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .icon-row__bubble svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .icon-row__body{flex:1 1 auto;min-width:0}
@@ -675,7 +689,7 @@
 .empty__bubble{
   width:62px;height:62px;display:grid;place-items:center;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .empty__bubble svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .empty h2{margin:0;font-size:19px;font-weight:600;color:var(--ink);letter-spacing:-.018em}
@@ -733,7 +747,7 @@
 .statcard__bubble{
   width:30px;height:30px;display:grid;place-items:center;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .statcard__bubble svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .statcard__item b{font-size:16px;font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1.1}
@@ -805,7 +819,7 @@
 .trust__bubble{
   width:32px;height:32px;display:grid;place-items:center;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .trust__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .trust__item b{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.25}
@@ -832,7 +846,7 @@
 .benefit__bubble{
   flex:none;width:34px;height:34px;display:grid;place-items:center;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .benefit__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .benefit__body{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -896,7 +910,7 @@
   margin:14px var(--pad) 0;padding:20px;
   border-radius:var(--r-lg);color:#fff;
   background:var(--navy);
-  box-shadow:0 6px 16px rgba(8,50,97,.2);
+  box-shadow:0 6px 16px rgba(13,71,161,.22);
 }
 /* One flat lighter-navy block bleeding off the corner — the band's only
    secondary shape, kept opaque so nothing sits behind the type. */
@@ -989,7 +1003,7 @@
   display:flex;align-items:center;gap:15px;
   margin:14px var(--pad) 0;padding:20px 18px;
   background:var(--navy);color:#fff;border-radius:var(--r-lg);
-  box-shadow:0 6px 16px rgba(8,50,97,.2);
+  box-shadow:0 6px 16px rgba(13,71,161,.22);
 }
 .idcard::after{
   content:'';position:absolute;right:-58px;bottom:-70px;
@@ -1097,7 +1111,7 @@
 .addr{display:flex;gap:12px;padding:13px;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-md)}
 .addr__pin{
   flex:none;display:grid;place-items:center;width:32px;height:32px;
-  background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);border-radius:var(--r-pill);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);border-radius:var(--r-pill);
 }
 .addr__pin svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .addr__body{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -1357,7 +1371,7 @@
 .what__bubble{
   display:grid;place-items:center;width:38px;height:38px;
   background:linear-gradient(145deg,var(--accent-mid),var(--accent));
-  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .what__bubble svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .what__text{display:flex;flex-direction:column;gap:3px;min-width:0}
@@ -1379,7 +1393,7 @@
 .area::after{
   content:'';position:absolute;right:-70px;top:-62px;
   width:190px;height:190px;border-radius:var(--r-pill);
-  border:22px solid rgba(8,50,97,.06);
+  border:22px solid rgba(13,71,161,.07);
 }
 .area__bubble{
   position:relative;z-index:2;display:grid;place-items:center;
@@ -1409,7 +1423,7 @@
 .plan:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
 .plan--featured{
   border-color:transparent;color:#fff;
-  background:var(--navy);box-shadow:0 8px 20px rgba(8,50,97,.22);
+  background:var(--navy);box-shadow:0 8px 20px rgba(13,71,161,.24);
 }
 .plan__top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
 .plan__name{margin:0;font-size:16px;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
@@ -1469,7 +1483,7 @@
 .issue[data-active]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .issue__bubble{
   flex:none;width:34px;height:34px;display:grid;place-items:center;
-  border-radius:var(--r-pill);background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);
+  border-radius:var(--r-pill);background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);
 }
 .issue__bubble svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .issue span{font-size:12.5px;font-weight:500;line-height:1.3;color:var(--ink)}
@@ -1491,7 +1505,7 @@
 }
 .auth__bubble{
   display:grid;place-items:center;width:54px;height:54px;
-  background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(8,50,97,.22);border-radius:var(--r-pill);
+  background:linear-gradient(145deg,var(--accent-mid),var(--accent));color:#fff;box-shadow:0 2px 6px rgba(13,71,161,.24);border-radius:var(--r-pill);
 }
 .auth__bubble svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .auth h1{margin:14px 0 0;font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
@@ -1591,6 +1605,78 @@
 .statcard__bubble.statcard__bubble,.empty__bubble.empty__bubble,
 .addr__pin.addr__pin,.auth__bubble.auth__bubble{
   color:#fff;
+}
+
+/* ── shapes ──────────────────────────────────────────────
+   Soft blue forms sitting behind the content, drawn with gradients rather
+   than images so they cost nothing and scale to any screen. They give the
+   long white stretches something to hold, and they are the lightest two of
+   the four blues so nothing has to compete with them. */
+.band{position:relative}
+.band::before{
+  content:'';position:absolute;z-index:0;pointer-events:none;
+  top:-40px;right:-70px;width:230px;height:230px;border-radius:var(--r-pill);
+  background:radial-gradient(circle at 30% 30%,var(--accent-soft),transparent 68%);
+  opacity:.85;
+}
+.band:nth-of-type(even)::before{right:auto;left:-80px;top:auto;bottom:-50px}
+.band>*{position:relative;z-index:1}
+
+/* A ring, off the left edge, echoing the bubbles without being one. */
+.statcard{position:relative;overflow:hidden}
+.statcard::after{
+  content:'';position:absolute;z-index:0;pointer-events:none;
+  left:-58px;bottom:-72px;width:150px;height:150px;border-radius:var(--r-pill);
+  border:16px solid var(--accent-soft);
+}
+.statcard__item{position:relative;z-index:1}
+
+/* ── motion ──────────────────────────────────────────────
+   Scroll-driven, so it is tied to where the page actually is rather than to
+   a timer, and it costs no JavaScript. Unsupported browsers simply get the
+   finished state — the rule only applies where the timeline exists.
+
+   `translate` rather than `transform`, deliberately: the press and hover
+   rules below own `transform`, and an animation would outrank them for the
+   life of the element and kill the lift. */
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    .pcard,.row,.icon-row,.statcard,.specs,.trust,.benefit,
+    .section-head,.story__copy,.videos__intro,.what,.plan{
+      animation:rise-in linear both;
+      animation-timeline:view();
+      animation-range:entry 2% entry 42%;
+    }
+  }
+}
+@keyframes rise-in{
+  from{opacity:0;translate:0 20px}
+  to{opacity:1;translate:0 0}
+}
+
+/* The active tab's dot breathes — the one thing on screen that is never
+   not moving, which is what stops a static shell reading as a screenshot. */
+@media (prefers-reduced-motion:no-preference){
+  .tab[aria-current="page"]::after{animation:tab-dot 2.6s ease-in-out infinite}
+}
+@keyframes tab-dot{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.55);opacity:.55}
+}
+
+/* Primary buttons catch a slow sheen, so the main action on a screen is the
+   thing that moves. */
+.btn:not(.btn--ghost):not(:disabled){position:relative;overflow:hidden}
+@media (prefers-reduced-motion:no-preference){
+  .btn:not(.btn--ghost):not(:disabled)::after{
+    content:'';position:absolute;inset:0 auto 0 -60%;width:45%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+    animation:sheen 5.5s ease-in-out infinite;
+  }
+}
+@keyframes sheen{
+  0%,62%{transform:translateX(0)}
+  92%,100%{transform:translateX(360%)}
 }
 
 /* ── press & hover ───────────────────────────────────────

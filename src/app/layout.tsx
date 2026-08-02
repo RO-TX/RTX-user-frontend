@@ -50,7 +50,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
       <body>
-        <ClickSpark sparkColor="#083261" sparkSize={12} sparkRadius={20} sparkCount={8} duration={420}>
+        <ClickSpark sparkColor="#2196F3" sparkSize={12} sparkRadius={20} sparkCount={8} duration={420}>
           <AuthProvider>
             <CatalogProvider products={products}>
               <CartProvider>{children}</CartProvider>
