@@ -7,13 +7,15 @@
    ══════════════════════════════════════════════════════════ */
 
 :root{
-  --bone:#E8E8EB;        /* canvas outside the phone */
-  /* Neutral grey, not a tint: it only has to sit a shade under the cards.
-     Kept close to the studio background baked into the photography. */
-  --surface:#F3F3F5;
-  --card:#FFFFFF;        /* every card is true white, lifted by shadow */
-  --tile:#F1F1F3;        /* product image tile */
-  --thumb:#F1F1F3;       /* category thumb */
+  --bone:#E4E4E8;        /* canvas outside the phone */
+  /* The ground is the lightest thing on screen and every panel sits a shade
+     into it. Cards are defined by that step in tone, not by shadow — so the
+     shadows below are a hint of depth rather than the thing doing the work. */
+  --surface:#FFFFFF;     /* page ground */
+  --card:#F2F2F5;        /* every card/panel sits a shade under the ground */
+  --tile:#FFFFFF;        /* product image tile — a white well in a grey card */
+  --thumb:#FFFFFF;       /* category thumb */
+  --input:#FFFFFF;       /* form fields stay white wherever they land */
 
   --navy:#083261;        /* primary — buttons, active nav, logo */
   --navy-deep:#06284E;
@@ -31,10 +33,12 @@
   --line:#E5E5E9;
   --line-soft:#EEEEF1;
 
-  /* Cards are separated from the ground by shadow, not by a heavy border. */
-  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
-  --shadow-card:0 1px 3px rgba(16,24,40,.08),0 8px 20px rgba(16,24,40,.06);
-  --shadow-lift:0 2px 6px rgba(16,24,40,.09),0 14px 32px rgba(16,24,40,.10);
+  /* Cards are separated from the ground by tone, so these only have to
+     suggest a lift — the heavy drop shadows the white-on-grey scheme needed
+     would read as smudges under a grey panel. */
+  --shadow-sm:0 1px 2px rgba(16,24,40,.04);
+  --shadow-card:0 1px 2px rgba(16,24,40,.05),0 4px 12px rgba(16,24,40,.04);
+  --shadow-lift:0 2px 5px rgba(16,24,40,.07),0 10px 22px rgba(16,24,40,.07);
 
   --promo-a:#DCE9F1;
   --promo-b:#B4C6D9;
@@ -166,39 +170,22 @@
 .btn--ghost:hover{background:var(--accent-soft)}
 .btn--block{display:flex;width:100%;justify-content:center}
 
-/* Section heads sit on a rule rather than beside a tick.
-   A hairline runs the full width of the head — under the "View all" link too,
-   so it reads as one band opening rather than a title with a loose line next
-   to it — and a short navy segment rides on top of it at the left. That
-   segment carries the spot of brand colour the old gutter bar gave, but the
-   rule is what does the work: a heading now starts a section instead of
-   looking like an item in a list. */
+/* The heading is its own block of colour rather than type with a line near
+   it: a navy-tinted plate the width of its words. On a white ground it gives
+   each section a definite start, and it is the one place besides buttons and
+   the tab bar where the brand hue lands on a surface. */
 .section-head{
-  position:relative;
-  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  padding:0 var(--pad) 12px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:0 var(--pad);
 }
-.section-head h2{
-  margin:0;font-size:20px;font-weight:600;letter-spacing:-.015em;color:var(--ink);
+.section-head h2,
+.story__copy h2,
+.videos__intro h2{
+  display:inline-block;margin:0;padding:7px 14px;
+  background:var(--accent-soft);border-radius:var(--r-sm);
+  font-size:18px;font-weight:600;letter-spacing:-.015em;color:var(--accent-deep);
 }
-.section-head::after,
-.story__copy h2::after,
-.videos__intro h2::after{
-  content:'';position:absolute;left:var(--pad);right:var(--pad);bottom:0;
-  height:1px;background:var(--line);
-}
-.section-head::before,
-.story__copy h2::before,
-.videos__intro h2::before{
-  content:'';position:absolute;left:var(--pad);bottom:0;z-index:1;
-  width:38px;height:3px;border-radius:var(--r-pill);
-  background:linear-gradient(90deg,var(--accent),var(--accent-mid));
-}
-/* Those two headings are not inside a `.section-head`, so the rule hangs off
-   the heading itself and the gutter is already the parent's padding. */
-.story__copy h2::after,.videos__intro h2::after,
-.story__copy h2::before,.videos__intro h2::before{left:0}
-.story__copy h2::after,.videos__intro h2::after{right:0}
+.story__copy h2,.videos__intro h2{align-self:flex-start}
 .link-more{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:500;color:var(--accent-deep)}
 
 .stars{display:inline-flex;gap:1.5px;color:var(--navy)}
@@ -304,7 +291,7 @@
    layer, and it belongs to the bar. */
 .shop-head .search{
   flex:1 1 auto;min-width:0;margin:0;padding:11px 15px;
-  background:var(--surface);box-shadow:none;
+  background:var(--card);box-shadow:none;
 }
 .shop-head__actions{display:flex;align-items:center;gap:6px}
 .shop-head__actions .tap{margin:0;width:38px;height:38px}
@@ -335,7 +322,7 @@
   text-transform:uppercase;color:var(--faint);
 }
 .filters .chips{padding:0;flex-wrap:wrap;gap:7px;overflow:visible}
-.filters .chip{background:var(--surface);padding:7px 13px;font-size:12.5px}
+.filters .chip{background:var(--card);padding:7px 13px;font-size:12.5px}
 .filters__clear{align-self:flex-start;font-size:13px;font-weight:500;color:var(--accent-deep)}
 .filters__clear:hover{text-decoration:underline}
 /* Read-only stand-in for the input on the home screen. line-height:normal
@@ -354,7 +341,15 @@
 }
 .cat:hover .cat__tile{transform:translateY(-2px)}
 .cat__tile img{width:100%;height:100%;object-fit:cover;border-radius:15px;background:var(--card)}
-.cat span{font-size:12.5px;font-weight:500;color:var(--ink);text-align:center;letter-spacing:-.005em}
+/* Labels are clamped to two lines. "Commercial RO Plants" used to run to
+   three and shove the rail out of rhythm; the full name is never lost —
+   tapping the tile puts it at the head of the results. */
+.cat span{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+  overflow:hidden;text-overflow:ellipsis;
+  font-size:11px;line-height:1.3;font-weight:500;color:var(--ink);
+  text-align:center;letter-spacing:-.005em;
+}
 /* On /shop the rail is the filter, so the chosen category has to read as
    selected from across the screen. */
 .cat[data-active] .cat__tile{background:var(--navy);box-shadow:0 4px 12px rgba(8,50,97,.28)}
@@ -642,7 +637,7 @@
 .field label{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.01em}
 .field input,.field select,.field textarea{
   width:100%;padding:12px 14px;
-  background:var(--card);border:1px solid var(--line);
+  background:var(--input);border:1px solid var(--line);
   border-radius:var(--r-sm);box-shadow:inset 0 1px 2px rgba(16,24,40,.04);
   font-family:inherit;font-size:14.5px;color:var(--ink);
   outline:none;transition:border-color .16s ease;
@@ -752,13 +747,13 @@
 
 /* ── Our Story ────────────────────────────────────────── */
 .story{display:grid;grid-template-columns:1fr 128px;gap:16px;padding:0 var(--pad);align-items:start}
-.story__copy h2{position:relative;margin:0;padding-bottom:11px;font-size:20px;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+/* sized and coloured with the other section heads above */
 .story__copy p{margin:9px 0 0;font-size:13.5px;line-height:1.6;color:var(--body)}
 .story__media{display:block;width:100%}
 
 /* ── RTX in Action ────────────────────────────────────── */
 .videos__intro{padding:0 var(--pad)}
-.videos__intro h2{position:relative;margin:0;padding-bottom:11px;font-size:20px;font-weight:600;letter-spacing:-.015em;color:var(--ink)}
+/* sized and coloured with the other section heads above */
 .videos__intro p{margin:7px 0 0;font-size:13.5px;line-height:1.55;color:var(--body);max-width:30ch}
 .videos__hero{display:block;width:100%;padding:14px var(--pad) 0}
 .videos__rail{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;padding:14px var(--pad) 0}
@@ -1043,11 +1038,11 @@
 /* No tick on a failure — a checkmark next to an error reads as success. */
 .sect__msg--err{color:#B4321F}
 .field__hint{font-size:11px;line-height:1.4;color:var(--faint)}
-.field input[readonly]{background:var(--surface);color:var(--muted)}
+.field input[readonly]{background:var(--card);color:var(--muted)}
 
 /* Orders */
 .orders{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.order{background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r-md);overflow:hidden}
+.order{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-md);overflow:hidden}
 .order__top{display:flex;align-items:center;gap:11px;width:100%;padding:11px;text-align:left}
 .order__thumbs{display:flex;flex:none}
 .order__thumbs img{
@@ -1082,7 +1077,7 @@
 
 /* Addresses */
 .addrs{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.addr{display:flex;gap:12px;padding:13px;background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r-md)}
+.addr{display:flex;gap:12px;padding:13px;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--r-md)}
 .addr__pin{
   flex:none;display:grid;place-items:center;width:32px;height:32px;
   background:var(--bubble);color:var(--accent-deep);border-radius:var(--r-pill);
@@ -1654,10 +1649,7 @@
   .page-head{padding:34px var(--pad) 0}
   .page-head h1{font-size:33px}
   .page-head p{margin-top:7px;font-size:16px}
-  .section-head h2,.story__copy h2,.videos__intro h2{font-size:23px}
-  .section-head{padding-bottom:14px}
-  .story__copy h2,.videos__intro h2{padding-bottom:14px}
-  .section-head::before,.story__copy h2::before,.videos__intro h2::before{width:46px}
+  .section-head h2,.story__copy h2,.videos__intro h2{font-size:21px;padding:8px 17px}
   .band{padding-top:38px;margin-top:38px}
   .band--flush{padding-top:34px}
   .landing-foot{height:34px}

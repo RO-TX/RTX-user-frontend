@@ -36,7 +36,10 @@ export default function CategoryRail({
           <span className="cat__tile">
             <Image src={c.image} alt="" width={124} height={124} />
           </span>
-          <span>{c.name}</span>
+          {/* Clamped to two lines in CSS — `title` gives the rest back on a
+              pointer, and tapping through puts the full name on the results
+              heading, which is the only route a touch device has. */}
+          <span title={c.name}>{c.name}</span>
         </Link>
       ))}
     </nav>
