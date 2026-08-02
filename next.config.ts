@@ -20,6 +20,21 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
+  /**
+   * Opt-in reverse proxy, off unless `API_PROXY_TARGET` is set.
+   *
+   * It exists for tunnels and demos: served from one hostname, the API is
+   * same-origin with the pages, so the refresh cookie — `sameSite:'lax'`
+   * outside production — is actually sent, and CORS never comes into it.
+   * Gated on the variable so a real deploy, where the API has its own public
+   * host, never accidentally proxies to a machine that isn't there.
+   */
+  async rewrites() {
+    const target = process.env.API_PROXY_TARGET?.replace(/\/+$/, '');
+    if (!target) return [];
+    return [{ source: '/api/:path*', destination: `${target}/api/:path*` }];
+  },
+
   // Both of these were the home screen at some point during the rebuild.
   async redirects() {
     return [

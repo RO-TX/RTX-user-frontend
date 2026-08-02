@@ -19,7 +19,12 @@ import type { Envelope, ErrorEnvelope, Pagination } from './types';
  * to make on a deploy, so the suffix is enforced here rather than trusted.
  */
 export const API_BASE = (() => {
-  const raw = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, '');
+  // Server-side rendering can take a shortcut to the backend that the browser
+  // cannot — a private address, or plain localhost while the public URL is a
+  // tunnel. Without it, prerendering would have to travel out to the public
+  // hostname and back, which fails outright during a build.
+  const server = typeof window === 'undefined' ? process.env.API_URL_INTERNAL : undefined;
+  const raw = (server || process.env.NEXT_PUBLIC_API_URL)?.replace(/\/+$/, '');
   if (!raw) return 'http://localhost:5000/api';
   return /\/api$/.test(raw) ? raw : `${raw}/api`;
 })();
