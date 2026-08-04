@@ -426,8 +426,15 @@
   transition:box-shadow .2s ease,transform .2s ease;
 }
 .pcard:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
-.pcard__media{position:relative;background:var(--tile);display:block}
-.pcard__media img{width:100%;aspect-ratio:1/.80;object-fit:cover}
+/* The card is two halves with a step in tone between them: the photo well is
+   the darker one, the details the lighter, so the eye lands on the picture
+   first and reads down into the text.
+   `multiply` is what makes that hold for real photography — product shots are
+   cut out on a near-white ground, which would otherwise sit as a pale slab
+   inside the darker well. Multiplied, white takes the well's tint and the
+   seam disappears, while the product itself is untouched. */
+.pcard__media{position:relative;background:var(--chrome);display:block}
+.pcard__media img{width:100%;aspect-ratio:1/.80;object-fit:cover;mix-blend-mode:multiply}
 .tagline{
   position:absolute;top:9px;left:9px;
   display:inline-flex;align-items:center;gap:5px;
@@ -463,9 +470,10 @@
 .pcard--wide{grid-column:1/-1}
 /* The band is a definite box and the photo is laid inside it absolutely —
    a percentage height on the image alone resolves against nothing. */
-/* Near-white, matched to the ground already baked into the photos, so the
-   letterboxing either side of a contained shot is invisible. */
-.pcard--wide .pcard__media{height:206px;overflow:hidden;background:#FCFCFB}
+/* Same darker well as the small cards. The shot is contained rather than
+   cropped, and multiply drops its baked-in white ground onto the tint, so
+   the letterboxing either side stays invisible. */
+.pcard--wide .pcard__media{height:206px;overflow:hidden;background:var(--chrome)}
 .pcard--wide .pcard__media img{
   position:absolute;inset:0;width:100%;height:100%;
   aspect-ratio:auto;object-fit:contain;
@@ -849,13 +857,20 @@
 .trust__item b{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.25}
 .trust__item span{font-size:10.5px;line-height:1.3;color:var(--muted)}
 .trust--bare{grid-template-columns:repeat(4,1fr);padding:26px var(--pad) 0}
+/* No panel. This is the closing line of the page, so it sits straight on the
+   ground and a dark rule above it does the separating a box used to — one
+   less container for three short facts.
+   The bubbles keep the filled-accent treatment used everywhere else: they had
+   been overridden to a near-white fill, which left a white glyph on a white
+   disc and made all three icons all but invisible. */
 .trust--card{
   grid-template-columns:repeat(3,1fr);
-  margin:18px var(--pad) 0;padding:16px 10px;
-  background:var(--accent-soft);
-  border:1px solid var(--accent-line);border-radius:var(--r-md);
+  margin:30px 0 0;padding:26px var(--pad) 2px;
+  border-top:1px solid var(--ink);
 }
-.trust--card .trust__bubble{background:var(--card)}
+.trust--card .trust__item{gap:9px}
+.trust--card .trust__bubble{width:40px;height:40px}
+.trust--card .trust__bubble svg{width:21px;height:21px}
 .trust--card .trust__item b{font-size:12.5px}
 .trust--card .trust__item span{font-size:11px}
 
@@ -1880,7 +1895,7 @@
 
   /* ── trust ─────────────────────────────────────────────── */
   .trust--bare{gap:22px;padding:44px var(--pad) 0}
-  .trust--card{margin-top:26px;padding:22px 20px;gap:20px}
+  .trust--card{margin-top:38px;padding:32px var(--pad) 2px;gap:20px}
   .trust__bubble{width:40px;height:40px}
   .trust__bubble svg{width:20px;height:20px}
   .trust__item b{font-size:13.5px}
