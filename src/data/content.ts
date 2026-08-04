@@ -102,7 +102,9 @@ export const trustLanding: TrustItem[] = [
 
 /** Three-up card on the shop screens. */
 export const trustShop: TrustItem[] = [
-  { icon: 'delivery', title: 'Free Shipping', note: 'On Orders Above ₹5,000' },
+  // One line each. Wrapping to two set the height of the whole row, which
+  // left the other two columns trailing dead space under their notes.
+  { icon: 'delivery', title: 'Free Shipping', note: 'Above ₹5,000' },
   { icon: 'warranty', title: '1 Year Warranty', note: 'On All Products' },
   { icon: 'families', title: 'Expert Support', note: 'Seven days a week' },
 ];
