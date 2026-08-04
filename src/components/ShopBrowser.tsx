@@ -126,7 +126,7 @@ export default function ShopBrowser({
       <header className="shop-head">
         {/* One row that never wraps: the field flexes, the two actions never
             leave its right-hand side however narrow the phone gets. */}
-        <div className="shop-head__row" ref={menu}>
+        <div className="shop-head__row">
           <div className="search">
             <Search className="icon icon--sm" />
             <input
@@ -136,17 +136,6 @@ export default function ShopBrowser({
               placeholder="Search purifiers, parts…"
               aria-label="Search products"
             />
-            <button
-              type="button"
-              className="search__filter"
-              onClick={() => setOpen((v) => !v)}
-              aria-expanded={open}
-              aria-controls="shop-filters"
-              aria-label="Filter and sort"
-              data-touched={touched || undefined}
-            >
-              <Sliders className="icon icon--sm" />
-            </button>
           </div>
 
           <div className="shop-head__actions">
@@ -155,6 +144,31 @@ export default function ShopBrowser({
             </Link>
             <CartBadge />
           </div>
+        </div>
+      </header>
+
+      {children}
+
+      {/* The filter lives with the count it changes, not in the search field:
+          the number to its left is the only feedback a filter gives, and the
+          panel drops directly over the grid it is narrowing. */}
+      <div className="result-head" ref={menu}>
+        <h2>{category ? category.name : 'All Products'}</h2>
+        <div className="result-head__end">
+          <span>
+            {results.length} {results.length === 1 ? 'item' : 'items'}
+          </span>
+          <button
+            type="button"
+            className="search__filter"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="shop-filters"
+            aria-label="Filter and sort"
+            data-touched={touched || undefined}
+          >
+            <Sliders className="icon icon--sm" />
+          </button>
 
           {/* A dropdown hung off the bar rather than a sheet over the page —
               the results stay put behind it, so the count you are changing
@@ -229,15 +243,6 @@ export default function ShopBrowser({
             </div>
           )}
         </div>
-      </header>
-
-      {children}
-
-      <div className="result-head">
-        <h2>{category ? category.name : 'All Products'}</h2>
-        <span>
-          {results.length} {results.length === 1 ? 'item' : 'items'}
-        </span>
       </div>
 
       {results.length > 0 ? (

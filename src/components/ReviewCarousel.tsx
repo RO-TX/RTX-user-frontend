@@ -2,13 +2,19 @@
 
 import { useState } from 'react';
 import { ReviewStars } from './sections';
-import { reviews as fallback, type Review } from '@/data/content';
+import type { Review } from '@/data/content';
 
-export default function ReviewCarousel({ reviews = fallback }: { reviews?: Review[] }) {
+/**
+ * Renders nothing at all when there is nothing to render. A storefront with
+ * no testimonials should be quiet about it, not show invented ones — so the
+ * caller can hand this whatever the API returned and let it decide.
+ */
+export default function ReviewCarousel({ reviews }: { reviews: Review[] }) {
   const [i, setI] = useState(0);
-  // An empty list would otherwise take the whole page down on render.
-  const list = reviews.length ? reviews : fallback;
+  const list = reviews;
   const r = list[Math.min(i, list.length - 1)];
+
+  if (!list.length) return null;
 
   return (
     <>

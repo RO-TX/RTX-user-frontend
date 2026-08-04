@@ -13,7 +13,7 @@ import { SectionHead, BenefitList } from '@/components/sections';
 import { Heart, Share, SpecIcon } from '@/components/Icons';
 import { money } from '@/lib/money';
 import { accessoriesFor, relatedTo } from '@/data/catalog';
-import { getProduct, getProducts } from '@/lib/api/source';
+import { getProduct, getProducts, getReviews } from '@/lib/api/source';
 import { benefits } from '@/data/content';
 
 /** Pre-renders whatever the catalogue holds at build time — the live one when
@@ -38,7 +38,10 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const { value: product } = await getProduct(slug);
+  const [{ value: product }, { value: reviews }] = await Promise.all([
+    getProduct(slug),
+    getReviews(),
+  ]);
   if (!product) notFound();
 
   const alsoBought = accessoriesFor(product.slug);
@@ -124,10 +127,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </section>
       )}
 
-      <section className="band" aria-labelledby="says">
-        <SectionHead title="What Our Customers Say" href="/support" id="says" />
-        <ReviewCarousel />
-      </section>
+      {reviews.length > 0 && (
+        <section className="band" aria-labelledby="says">
+          <SectionHead title="What Our Customers Say" href="/support" id="says" />
+          <ReviewCarousel reviews={reviews} />
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="band" aria-labelledby="alike">

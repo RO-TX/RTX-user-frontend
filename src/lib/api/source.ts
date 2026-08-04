@@ -75,12 +75,19 @@ export async function getFeatured(limit = 3): Promise<{ value: Product[]; live: 
   );
 }
 
+/**
+ * The one read that is allowed to come back empty. A backend that answers
+ * with no testimonials is telling the truth — nobody has written one yet —
+ * and inventing three is worse than saying nothing, so the callers drop the
+ * section instead. An *unreachable* backend still hands over to the bundled
+ * copy, which is what keeps the prototype rendering with nothing on :5000.
+ */
 export async function getReviews() {
   return withFallback(
     async () => {
       const r = await api.content.reviews();
       const featured = r.data.filter((x) => x.featured);
-      return orFallback((featured.length ? featured : r.data).map(toReview));
+      return (featured.length ? featured : r.data).map(toReview);
     },
     staticReviews,
     'content/reviews',

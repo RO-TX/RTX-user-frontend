@@ -76,10 +76,14 @@ export default async function HomePage() {
         <VideoSection />
       </div>
 
-      <div className="band">
-        <SectionHead title="What Our Customers Say" href="/support" />
-        <ReviewCarousel reviews={reviews} />
-      </div>
+      {/* Heading and all: "What Our Customers Say" over an empty space is
+          worse than the section simply not being there. */}
+      {reviews.length > 0 && (
+        <div className="band">
+          <SectionHead title="What Our Customers Say" href="/support" />
+          <ReviewCarousel reviews={reviews} />
+        </div>
+      )}
 
       <div className="band">
         <YouTubeCard />

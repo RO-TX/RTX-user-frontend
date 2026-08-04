@@ -275,22 +275,25 @@
   font-family:inherit;font-size:14.5px;color:var(--ink);
 }
 .search input::placeholder{color:var(--faint)}
+ /* Sits beside the item count, so it is a button in its own right rather
+    than an affordance tucked inside the field: bordered, and big enough to
+    hit without aiming. */
 .search__filter{
   position:relative;flex:none;display:grid;place-items:center;
-  width:30px;height:30px;margin:-5px -6px -5px 0;
-  border-radius:var(--r-pill);color:var(--ink);
-  transition:background .16s ease,color .16s ease;
+  width:32px;height:32px;
+  background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-sm);color:var(--ink);
+  transition:background .16s ease,color .16s ease,border-color .16s ease;
 }
-.search__filter:hover{background:var(--line-soft)}
-.search__filter[aria-expanded="true"]{background:var(--navy);color:#fff}
+.search__filter:hover{background:var(--chrome)}
+.search__filter[aria-expanded="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
 /* A navy dot when something is filtering but the panel is shut — otherwise a
    narrowed result count has no visible cause. */
 .search__filter[data-touched]::after{
-  content:'';position:absolute;top:2px;right:2px;
-  width:6px;height:6px;border-radius:var(--r-pill);
+  content:'';position:absolute;top:-3px;right:-3px;
+  width:8px;height:8px;border-radius:var(--r-pill);
   background:var(--accent);box-shadow:0 0 0 2px var(--surface);
 }
-.search__filter[aria-expanded="true"][data-touched]::after{box-shadow:0 0 0 2px var(--navy)}
 
 /* Shop's top bar: the search field is the bar's content, with notifications
    and the cart to its right. It shares --chrome with the category chips below
@@ -326,7 +329,7 @@
    It floats over the results rather than pushing them down. */
 .filters{
   position:absolute;top:calc(100% + 10px);right:0;z-index:40;
-  width:min(330px,100%);
+  width:min(330px,calc(100vw - 2 * var(--pad)));
   display:flex;flex-direction:column;gap:13px;
   padding:15px 16px 16px;
   background:var(--card);border:1px solid var(--line);
@@ -337,7 +340,7 @@
 @media (prefers-reduced-motion:reduce){.filters{animation:none}}
 /* A small notch pointing back at the trigger. */
 .filters::before{
-  content:'';position:absolute;top:-5px;right:26px;
+  content:'';position:absolute;top:-5px;right:12px;
   width:9px;height:9px;transform:rotate(45deg);
   background:var(--card);border-left:1px solid var(--line);border-top:1px solid var(--line);
 }
@@ -387,29 +390,35 @@
   min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   font-size:12.5px;font-weight:500;letter-spacing:-.005em;
 }
-/* Selected: filled, and the image stays visible inside its own crop. */
+/* Selected without shouting. A solid navy chip put the heaviest colour on
+   the screen into a filter control — louder than the products it was meant
+   to be filtering. A pale tint, a blue rule and blue type say the same thing
+   at a fraction of the volume, and the thumbnail stays legible inside it. */
 .cat[data-active]{
-  background:var(--accent);border-color:var(--accent);color:#fff;
-  box-shadow:var(--shadow-primary);
+  background:var(--accent-soft);border-color:var(--accent-mid);
+  color:var(--accent-deep);box-shadow:none;
 }
 .cat[data-active] span{font-weight:600}
 /* "Everything" has no photograph — a dot stands in, so the chip keeps the
    same shape as the others instead of starting with a hole. */
 .cat__tile--all{
-  display:grid;place-items:center;background:var(--accent-soft);
+  display:grid;place-items:center;background:var(--card);
 }
 .cat__tile--all::before{
-  content:'';width:9px;height:9px;border-radius:var(--r-pill);background:var(--accent-mid);
+  content:'';width:9px;height:9px;border-radius:var(--r-pill);background:var(--muted);
 }
-.cat[data-active] .cat__tile--all{background:rgba(255,255,255,.22)}
-.cat[data-active] .cat__tile--all::before{background:#fff}
+.cat[data-active] .cat__tile--all{background:#fff}
+.cat[data-active] .cat__tile--all::before{background:var(--accent-mid)}
 
 /* count line above the results grid. The rail's own bottom edge already
    closes the control band off, so this needs no rule of its own. */
 .result-head{
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:18px var(--pad) 10px;
+  padding:16px var(--pad) 10px;
 }
+/* The count and the control that changes it, kept together. Also the anchor
+   for the filter panel, so it opens under the button that summoned it. */
+.result-head__end{position:relative;display:flex;align-items:center;gap:10px}
 /* Plain type, no plate. This heading carries the chosen category's full name —
    a filter that just changed the grid below it, so it needs to be readable at
    a glance, not decorated. The blue plate is for the marketing sections. */
@@ -1840,9 +1849,8 @@
   .shop-head{position:static;padding:0 var(--pad);background:none;border-bottom:0;box-shadow:none}
   .shop-head .search{margin-top:22px;padding:14px 18px;background:var(--input);box-shadow:var(--shadow-card)}
   .shop-head__actions{display:none}
-  /* The actions are hidden up here, so the dropdown squares up with the
-     field itself — same left edge, same width, notch still under the icon. */
-  .filters{top:calc(100% + 12px);left:0;right:auto;width:min(520px,100%)}
+  /* Still hung off the button beside the count, just roomier. */
+  .filters{width:min(420px,calc(100vw - 2 * var(--pad)))}
   .result-head{margin-top:24px;padding:24px var(--pad) 10px;border-top:1px solid var(--line)}
   .result-head h2{font-size:23px}
 
