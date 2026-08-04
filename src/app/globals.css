@@ -194,21 +194,16 @@
   display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:0 var(--pad);
 }
+/* One heading, everywhere. These carried a filled blue plate, which put the
+   loudest colour on the page onto the label of a section rather than onto
+   anything you can act on — and repeated it down a long scroll. Bold type at
+   a size that outranks everything around it does the same job, and leaves
+   blue meaning "this is a control". Matches the shop's results heading and
+   the page titles above. */
 .section-head h2,
 .story__copy h2,
 .videos__intro h2{
-  display:inline-block;margin:0;padding:7px 14px;
-  background:var(--accent);
-  border-radius:var(--r-sm);box-shadow:var(--shadow-primary);
-  font-size:18px;font-weight:600;letter-spacing:-.015em;color:#fff;
-}
-/* Detail screens — anything opened from a list, so product, cart, checkout
-   and order — drop the plate. The blue plate is a marketing device for the
-   landing page's long scroll; on a page you arrived at to do one thing, it
-   competes with the product itself. Plain bold type, matching the shop's
-   results heading. */
-.screen:has(> .navbar) .section-head h2{
-  padding:0;background:none;box-shadow:none;border-radius:0;
+  margin:0;
   font-size:20px;font-weight:700;letter-spacing:-.022em;color:var(--ink);
 }
 .story__copy h2,.videos__intro h2{align-self:flex-start}
@@ -1834,8 +1829,7 @@
   .page-head{padding:34px var(--pad) 0}
   .page-head h1{font-size:33px}
   .page-head p{margin-top:7px;font-size:16px}
-  .section-head h2,.story__copy h2,.videos__intro h2{font-size:21px;padding:8px 17px}
-  .screen:has(> .navbar) .section-head h2{font-size:24px;padding:0}
+  .section-head h2,.story__copy h2,.videos__intro h2{font-size:24px}
   .band{padding-top:38px;margin-top:38px}
   .band--flush{padding-top:34px}
   .landing-foot{height:34px}
