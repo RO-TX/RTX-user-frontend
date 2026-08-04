@@ -11,6 +11,7 @@ import {
 } from 'react';
 import { api } from './api';
 import { toAccountUser } from './api/adapt';
+import { signInWithGoogle as googlePopup } from './firebase';
 import type { AccountUser } from '@/data/account';
 
 /**
@@ -38,6 +39,9 @@ interface AuthValue {
   user: AccountUser | null;
   status: AuthStatus;
   signIn: (email: string, password: string) => Promise<void>;
+  /** Google popup → Firebase ID token → RTX session. Throws GoogleAuthError
+   *  if the popup itself fails, or the usual ApiError if the exchange does. */
+  signInWithGoogle: () => Promise<void>;
   signUp: (body: SignUpBody) => Promise<void>;
   signOut: (everywhere?: boolean) => Promise<void>;
   /** Drops the session locally without calling the API — for the flows the
@@ -124,6 +128,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       status,
       signIn: async (email, password) => {
         const r = await api.auth.login(email, password);
+        setHint(true);
+        setUser(toAccountUser(r.data.user));
+        setStatus('authed');
+      },
+      signInWithGoogle: async () => {
+        // Two hops, and the first one can fail on its own (popup blocked,
+        // person changed their mind) — those never reach the API at all.
+        const idToken = await googlePopup();
+        const r = await api.auth.google(idToken);
         setHint(true);
         setUser(toAccountUser(r.data.user));
         setStatus('authed');

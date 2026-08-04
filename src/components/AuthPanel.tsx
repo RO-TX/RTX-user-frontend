@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { Check, ShieldCheck } from './Icons';
+import { Check, GoogleMark, ShieldCheck } from './Icons';
 import PasswordField, { isStrongPassword, passwordProblems } from './PasswordField';
 import { useAuth } from '@/lib/auth-context';
 import { api, apiMessage } from '@/lib/api';
+import { GoogleAuthError, googleAuthReady } from '@/lib/firebase';
 
 type Mode = 'signin' | 'signup' | 'forgot';
 
@@ -24,7 +25,7 @@ export default function AuthPanel({
   intro?: string;
   onDone?: () => void;
 }) {
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, signInWithGoogle } = useAuth();
   const [mode, setMode] = useState<Mode>('signin');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ text: string; ok: boolean } | null>(null);
@@ -51,6 +52,34 @@ export default function AuthPanel({
       await fn();
     } catch (err) {
       setMsg({ text: apiMessage(err, offline), ok: false });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  /**
+   * Backing out of the Google popup is not an error — it is someone changing
+   * their mind, and a red banner for that is just noise. Everything else gets
+   * reported: `GoogleAuthError` already carries a readable message, so only
+   * the API leg needs `apiMessage`.
+   */
+  async function onGoogle() {
+    setBusy(true);
+    setMsg(null);
+    try {
+      await signInWithGoogle();
+      onDone?.();
+    } catch (err) {
+      // GoogleAuthError already phrases itself for a customer; `apiMessage`
+      // would flatten it to the offline line, so it is read directly.
+      if (err instanceof GoogleAuthError) {
+        if (!err.cancelled) setMsg({ text: err.message, ok: false });
+      } else {
+        setMsg({
+          text: apiMessage(err, 'Could not finish signing in — the store is unreachable.'),
+          ok: false,
+        });
+      }
     } finally {
       setBusy(false);
     }
@@ -144,6 +173,23 @@ export default function AuthPanel({
       </span>
       <h1 id="auth-h">{heading}</h1>
       <p className="auth__intro">{intro}</p>
+
+      {/* Above the tabs, not inside one of them: with Google there is no
+          difference between signing in and creating an account — the backend
+          links or creates from the same token — so making someone pick a tab
+          first would be asking a question that has no answer. Hidden outright
+          when the build carries no Firebase keys. */}
+      {googleAuthReady && mode !== 'forgot' && (
+        <>
+          <button className="btn-google" type="button" onClick={onGoogle} disabled={busy}>
+            <GoogleMark />
+            Continue with Google
+          </button>
+          <div className="auth__or">
+            <span>or</span>
+          </div>
+        </>
+      )}
 
       <div className="auth__switch" role="tablist" aria-label="Account">
         <button

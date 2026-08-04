@@ -58,6 +58,18 @@ export const auth = {
     return r;
   },
 
+  /**
+   * Trades a Firebase ID token for an RTX session. The backend verifies the
+   * token's signature against the Firebase project, then links or creates the
+   * account — so what comes back is an ordinary session, identical to the one
+   * `login` returns.
+   */
+  google: async (idToken: string) => {
+    const r = await post<AuthPayload>('/auth/google', { idToken });
+    setAccessToken(r.data.accessToken);
+    return r;
+  },
+
   /** Reads the httpOnly cookie, rotates it, returns a fresh access token. */
   refresh: async () => {
     const r = await post<{ accessToken: string }>('/auth/refresh', undefined, { noRetry: true });
