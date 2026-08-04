@@ -299,7 +299,10 @@
 .shop-head{
   position:sticky;top:0;z-index:30;
   padding:12px var(--pad);
-  background:var(--chrome);border-bottom:1px solid var(--line);
+  background:var(--chrome);
+  /* No bottom hairline: the rail below carries the same ground, so a rule
+     here would read as a seam through the middle of one band. The shadow
+     still gives the bar an edge once the results scroll under it. */
   box-shadow:0 4px 18px rgba(16,24,40,.06);
 }
 /* nowrap, and the field is the only thing that flexes — the bell and cart
@@ -307,9 +310,11 @@
 .shop-head__row{position:relative;display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
 /* Inside the bar the field is recessed rather than raised — one shadow per
    layer, and it belongs to the bar. */
+/* White field on the grey band — the one thing in the bar you type into
+   should be the one thing that looks like a well. */
 .shop-head .search{
   flex:1 1 auto;min-width:0;margin:0;padding:11px 15px;
-  background:var(--chrome);box-shadow:none;
+  background:var(--input);box-shadow:none;
 }
 .shop-head__actions{display:flex;align-items:center;gap:6px}
 .shop-head__actions .tap{margin:0;width:38px;height:38px}
@@ -356,20 +361,24 @@
    crop of the image as a cue, and select by filling rather than hiding. It
    also survives the seed catalogue, whose category art is placeholder cards
    with words on them — unreadable at 64px, unobtrusive at 26px. */
+/* Carries the same ground as the bar above it, with no gap and no rule
+   between them: search and filter are one band of controls, and the results
+   below start where that band ends. */
 .cats{
-  display:flex;gap:8px;margin-top:16px;padding:0 var(--pad) 4px;
+  display:flex;gap:8px;margin-top:0;padding:2px var(--pad) 13px;
+  background:var(--chrome);border-bottom:1px solid var(--line);
   overflow-x:auto;scrollbar-width:none;
 }
 .cats::-webkit-scrollbar{display:none}
 .cat{
   flex:none;display:inline-flex;align-items:center;gap:8px;
   max-width:170px;padding:5px 15px 5px 5px;
-  background:var(--chrome);border:1px solid var(--line);border-radius:var(--r-pill);
+  background:var(--input);border:1px solid var(--line);border-radius:var(--r-pill);
   color:var(--ink);
 }
 .cat__tile{
   flex:none;display:block;width:26px;height:26px;
-  border-radius:var(--r-pill);overflow:hidden;background:var(--surface);
+  border-radius:var(--r-pill);overflow:hidden;background:var(--card);
 }
 .cat__tile img{width:100%;height:100%;object-fit:cover}
 .cat span{
@@ -393,13 +402,11 @@
 .cat[data-active] .cat__tile--all{background:rgba(255,255,255,.22)}
 .cat[data-active] .cat__tile--all::before{background:#fff}
 
-/* count line above the results grid */
-/* A full-bleed hairline closes the category rail off — browsing categories
-   and reading the results are two different jobs. */
+/* count line above the results grid. The rail's own bottom edge already
+   closes the control band off, so this needs no rule of its own. */
 .result-head{
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  margin-top:16px;padding:18px var(--pad) 10px;
-  border-top:1px solid var(--line);
+  padding:18px var(--pad) 10px;
 }
 /* Plain type, no plate. This heading carries the chosen category's full name —
    a filter that just changed the grid below it, so it needs to be readable at
@@ -1803,7 +1810,9 @@
   .statcard__label{font-size:12px}
 
   /* ── catalogue ─────────────────────────────────────────── */
-  .cats{flex-wrap:wrap;gap:10px;overflow:visible;padding:22px var(--pad) 4px}
+  /* No grey band up here — the bar loses its own ground too, so the rail is
+     just chips on the page. */
+  .cats{flex-wrap:wrap;gap:10px;overflow:visible;padding:22px var(--pad) 4px;background:none;border-bottom:0}
   .cat{max-width:none;padding:6px 18px 6px 6px}
   .cat__tile{width:30px;height:30px}
   .cat span{font-size:13.5px}
@@ -1812,12 +1821,12 @@
   /* The sticky rail is already the header up here, cart included — so the
      shop bar drops its chrome and its actions and is just the field again. */
   .shop-head{position:static;padding:0 var(--pad);background:none;border-bottom:0;box-shadow:none}
-  .shop-head .search{margin-top:22px;padding:14px 18px;background:var(--chrome);box-shadow:var(--shadow-card)}
+  .shop-head .search{margin-top:22px;padding:14px 18px;background:var(--input);box-shadow:var(--shadow-card)}
   .shop-head__actions{display:none}
   /* The actions are hidden up here, so the dropdown squares up with the
      field itself — same left edge, same width, notch still under the icon. */
   .filters{top:calc(100% + 12px);left:0;right:auto;width:min(520px,100%)}
-  .result-head{margin-top:24px;padding:24px var(--pad) 10px}
+  .result-head{margin-top:24px;padding:24px var(--pad) 10px;border-top:1px solid var(--line)}
   .result-head h2{font-size:23px}
 
   .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;padding-top:14px}
