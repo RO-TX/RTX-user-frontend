@@ -49,7 +49,7 @@ export interface Product {
   cardImage?: string;
   specs: Spec[];
   description: string;
-  badge?: 'Bestseller' | 'New';
+  badge?: 'Bestseller';
   inStock: boolean;
 }
 
@@ -133,7 +133,6 @@ export const products: Product[] = [
     ],
     description:
       'Our flagship purifier. Eight stages of purification, app-connected filter tracking and automatic TDS balancing that adapts to your local water supply without any manual adjustment.',
-    badge: 'New',
     inStock: true,
   },
   {

@@ -16,6 +16,11 @@
   --tile:#FFFFFF;        /* product image tile — a white well in a grey card */
   --thumb:#FFFFFF;       /* category thumb */
   --input:#FFFFFF;       /* form fields stay white wherever they land */
+  /* One step darker than --card, and shared by the two controls that sit at
+     the top of the shop — the search bar and the category chips. They are the
+     same kind of thing (chrome you act on, not content you read), so they get
+     the same tone and read as one band. */
+  --chrome:#E9EBEF;
 
   /* Four blues, one ramp: #0D47A1 anchors, #2196F3 is the live one,
      #90CAF9 draws lines and shapes, #E3F2FD is the surface tint. */
@@ -288,12 +293,13 @@
 .search__filter[aria-expanded="true"][data-touched]::after{box-shadow:0 0 0 2px var(--navy)}
 
 /* Shop's top bar: the search field is the bar's content, with notifications
-   and the cart to its right. Same card white and hairline as the landing app
-   bar and the tab bar, so all three read as the same piece of chrome. */
+   and the cart to its right. It shares --chrome with the category chips below
+   it, so the whole browsing control area reads as one band sitting on the
+   white page rather than three separate greys. */
 .shop-head{
   position:sticky;top:0;z-index:30;
   padding:12px var(--pad);
-  background:var(--card);border-bottom:1px solid var(--line);
+  background:var(--chrome);border-bottom:1px solid var(--line);
   box-shadow:0 4px 18px rgba(16,24,40,.06);
 }
 /* nowrap, and the field is the only thing that flexes — the bell and cart
@@ -303,11 +309,11 @@
    layer, and it belongs to the bar. */
 .shop-head .search{
   flex:1 1 auto;min-width:0;margin:0;padding:11px 15px;
-  background:var(--card);box-shadow:none;
+  background:var(--chrome);box-shadow:none;
 }
 .shop-head__actions{display:flex;align-items:center;gap:6px}
 .shop-head__actions .tap{margin:0;width:38px;height:38px}
-.shop-head__actions .cart__count{border-color:var(--card)}
+.shop-head__actions .cart__count{border-color:var(--chrome)}
 
 /* A dropdown hung under the bar, right-aligned to the icons that opened it.
    It floats over the results rather than pushing them down. */
@@ -358,7 +364,7 @@
 .cat{
   flex:none;display:inline-flex;align-items:center;gap:8px;
   max-width:170px;padding:5px 15px 5px 5px;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--r-pill);
+  background:var(--chrome);border:1px solid var(--line);border-radius:var(--r-pill);
   color:var(--ink);
 }
 .cat__tile{
@@ -395,13 +401,12 @@
   margin-top:16px;padding:18px var(--pad) 10px;
   border-top:1px solid var(--line);
 }
-/* Same plate as every other section head — this one carries the chosen
-   category's full name, which is where a tapped, clamped rail label goes. */
+/* Plain type, no plate. This heading carries the chosen category's full name —
+   a filter that just changed the grid below it, so it needs to be readable at
+   a glance, not decorated. The blue plate is for the marketing sections. */
 .result-head h2{
-  display:inline-block;margin:0;padding:7px 14px;
-  background:var(--accent);
-  border-radius:var(--r-sm);box-shadow:var(--shadow-primary);
-  font-size:17px;font-weight:600;letter-spacing:-.015em;color:#fff;
+  margin:0;
+  font-size:20px;font-weight:700;letter-spacing:-.022em;color:var(--ink);
 }
 .result-head span{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 
@@ -425,10 +430,6 @@
   font-size:10.5px;font-weight:600;letter-spacing:.005em;
   box-shadow:0 2px 6px rgba(13,71,161,.22);
 }
-/* Bestseller on navy, New on the lighter navy — one hue, two weights, so a
-   grid of cards never turns into confetti. */
-.tagline--best{background:var(--navy)}
-.tagline--new{background:var(--accent-mid)}
 .tagline svg{width:13px;height:13px;fill:#fff;stroke:none}
 .pcard__body{padding:11px 12px 12px;display:flex;flex-direction:column;gap:4px}
 .pcard__body h3{margin:0;font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.3}
@@ -1811,13 +1812,13 @@
   /* The sticky rail is already the header up here, cart included — so the
      shop bar drops its chrome and its actions and is just the field again. */
   .shop-head{position:static;padding:0 var(--pad);background:none;border-bottom:0;box-shadow:none}
-  .shop-head .search{margin-top:22px;padding:14px 18px;background:var(--card);box-shadow:var(--shadow-card)}
+  .shop-head .search{margin-top:22px;padding:14px 18px;background:var(--chrome);box-shadow:var(--shadow-card)}
   .shop-head__actions{display:none}
   /* The actions are hidden up here, so the dropdown squares up with the
      field itself — same left edge, same width, notch still under the icon. */
   .filters{top:calc(100% + 12px);left:0;right:auto;width:min(520px,100%)}
   .result-head{margin-top:24px;padding:24px var(--pad) 10px}
-  .result-head h2{font-size:19px}
+  .result-head h2{font-size:23px}
 
   .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px;padding-top:14px}
   /* Two tracks, not the whole row — across four or five columns the photo

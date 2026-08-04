@@ -152,6 +152,12 @@ export default function OrderDetail({ id }: { id: string }) {
                     : 'Not dispatched yet'}
                 </dd>
               </div>
+              {order.shipping?.estimatedDelivery && (
+                <div>
+                  <dt>Estimated delivery</dt>
+                  <dd>{fmt(order.shipping.estimatedDelivery)}</dd>
+                </div>
+              )}
             </dl>
 
             {order.shipping?.trackingHistory && order.shipping.trackingHistory.length > 0 && (
@@ -173,7 +179,9 @@ export default function OrderDetail({ id }: { id: string }) {
 
             {order.notes && <p className="sect__note">{order.notes}</p>}
 
-            <p className="sect__note">Live tracking not available yet.</p>
+            {!(order.shipping?.trackingHistory && order.shipping.trackingHistory.length > 0) && (
+              <p className="sect__note">Live tracking not available yet.</p>
+            )}
           </div>
         </article>
       </div>

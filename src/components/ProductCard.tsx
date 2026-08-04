@@ -41,8 +41,11 @@ export default function ProductCard({
           height={320}
           sizes={wide ? '(max-width: 760px) 100vw, 460px' : '(max-width: 760px) 50vw, 220px'}
         />
-        {product.badge && (
-          <span className={`tagline tagline--${product.badge === 'New' ? 'new' : 'best'}`}>
+        {/* Bestseller only. "New" was a second pill in a second blue on the
+            same grid, and being new is not a reason to buy — the bestsellers
+            are what the shop leads with, so they own the tag. */}
+        {product.badge === 'Bestseller' && (
+          <span className="tagline">
             <BadgeGlyph />
             {product.badge}
           </span>

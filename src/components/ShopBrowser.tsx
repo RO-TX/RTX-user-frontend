@@ -96,7 +96,6 @@ export default function ShopBrowser({
       );
     });
 
-    // 'featured' is the catalogue's own order, so it needs no sort pass.
     switch (sort) {
       case 'price-asc':
         return [...filtered].sort((a, b) => a.price - b.price);
@@ -105,7 +104,13 @@ export default function ShopBrowser({
       case 'rating':
         return [...filtered].sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
       default:
-        return filtered;
+        // Featured = bestsellers first, then the catalogue's own order within
+        // each half. An explicit sort is left alone: someone who asked for
+        // cheapest-first does not want two of them jumped to the top.
+        return [
+          ...filtered.filter((p) => p.badge === 'Bestseller'),
+          ...filtered.filter((p) => p.badge !== 'Bestseller'),
+        ];
     }
   }, [active, query, sort, band, inStock, offer, products]);
 

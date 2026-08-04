@@ -18,11 +18,8 @@ function firstLine(text: string, max = 46) {
   return line.length > max ? `${line.slice(0, max - 1).trimEnd()}…` : line;
 }
 
-const NEW_FOR_DAYS = 45;
-
 export function toProduct(p: ApiProduct): Product {
   const categorySlug = typeof p.category === 'string' ? p.category : p.category.slug;
-  const isNew = Date.now() - new Date(p.createdAt).getTime() < NEW_FOR_DAYS * 864e5;
 
   return {
     id: p._id,
@@ -40,7 +37,7 @@ export function toProduct(p: ApiProduct): Product {
     images: p.images.length ? p.images : ['/img/prod_pro.jpg'],
     specs: (p.specs ?? []) as Spec[],
     description: p.description,
-    badge: p.isTopSeller ? 'Bestseller' : isNew ? 'New' : undefined,
+    badge: p.isTopSeller ? 'Bestseller' : undefined,
     // `quantity` is the stock count; there is no separate boolean.
     inStock: p.quantity > 0,
   };
