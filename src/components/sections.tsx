@@ -146,6 +146,10 @@ export function YouTubeCard() {
           </span>
         </span>
       </Link>
+      <p className="ytcard__note">
+        <Play aria-hidden="true" />
+        Teardowns, installs and honest water tests — the whole RTX range, on camera.
+      </p>
     </section>
   );
 }
